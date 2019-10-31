@@ -17,6 +17,8 @@ app.get('/error', (req, res) => {
   throw new ErrorHandler(500, 'Internal Error!');
 });
 
+require('./server/routes')(app);
+
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 app.get('*', (req, res) =>
   res.status(200).send({

@@ -11,12 +11,14 @@ module.exports = {
         type: Sequelize.STRING
       },
       created_at: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       created_by: {
         type: Sequelize.INTEGER
       },
       updated_at: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       updated_by: {
@@ -27,14 +29,6 @@ module.exports = {
       },
       deleted_by: {
         type: Sequelize.INTEGER
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       },
       country_id: {
         type: Sequelize.INTEGER,

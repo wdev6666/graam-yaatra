@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     deleted_at: DataTypes.DATE,
     deleted_by: DataTypes.INTEGER
   });
+
   Vendor.associate = function(models) {
     Vendor.belongsTo(models.City, {
       foreignKey: 'city_id',

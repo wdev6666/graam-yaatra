@@ -9,9 +9,15 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.STRING,
     isd_code: DataTypes.INTEGER,
     flag_icon: DataTypes.STRING,
-    created_at: DataTypes.DATE,
+    created_at: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
     created_by: DataTypes.INTEGER,
-    updated_at: DataTypes.DATE,
+    updated_at: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
     updated_by: DataTypes.INTEGER,
     deleted_at: DataTypes.DATE,
     deleted_by: DataTypes.INTEGER
