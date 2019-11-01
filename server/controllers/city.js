@@ -1,49 +1,47 @@
-const Country = require('../models').Country;
+const City = require('../models').City;
 
 module.exports = {
   create(req, res, next) {
-    return Country.create({
-      country: req.body.country,
-      isd_code: req.body.isd_code,
-      flag_icon: req.body.flag_icon
+    return City.create({
+      city: req.body.city,
+      state_id: req.body.state_id
     })
-      .then(country => res.status(200).send(country))
+      .then(city => res.status(200).send(city))
       .catch(error => next({ statusCode: 400, message: error.message }));
   },
 
   list(req, res, next) {
-    return Country.findAll({})
-      .then(todos => res.status(200).send(todos))
+    return City.findAll({})
+      .then(cities => res.status(200).send(cities))
       .catch(error => next({ statusCode: 404, message: error.message }));
   },
 
   retrieve(req, res, next) {
-    return Country.findOne({
-      where: { country_id: req.params.country_id }
+    return City.findOne({
+      where: { city_id: req.params.city_id }
     })
-      .then(country => {
-        if (!country) next({ statusCode: 404, message: 'No country found!' });
-        return res.status(200).send(country);
+      .then(city => {
+        if (!city) next({ statusCode: 404, message: 'No city found!' });
+        return res.status(200).send(city);
       })
       .catch(error => next({ statusCode: 404, message: error.message }));
   },
 
   update(req, res, next) {
-    return Country.findOne({
+    return City.findOne({
       where: {
-        country_id: req.params.country_id
+        city_id: req.params.city_id
       }
     })
-      .then(country => {
-        if (!country) next({ statusCode: 400, message: 'Country not found!' });
-        return country
+      .then(city => {
+        if (!city) next({ statusCode: 400, message: 'City not found!' });
+        return city
           .update({
-            country: req.body.country,
-            isd_code: req.body.isd_code,
-            flag_icon: req.body.flag_icon
+            city: req.body.city,
+            state_id: req.body.state_id
           })
           .then(() => {
-            res.send(country);
+            res.send(city);
           })
           .catch(error => {
             next({ statusCode: 400, message: error.message });
@@ -55,15 +53,15 @@ module.exports = {
   },
 
   delete(req, res, next) {
-    return Country.findOne({
-      where: { country_id: req.params.country_id }
+    return City.findOne({
+      where: { city_id: req.params.city_id }
     })
-      .then(country => {
-        if (!country) next({ statusCode: 400, message: 'Country not found!' });
-        return country
+      .then(city => {
+        if (!city) next({ statusCode: 400, message: 'City not found!' });
+        return city
           .destroy()
           .then(() =>
-            res.status(200).send({ message: 'Country deleted successfully.' })
+            res.status(200).send({ message: 'City deleted successfully.' })
           )
           .catch(error => {
             next({ statusCode: 400, message: error.message });

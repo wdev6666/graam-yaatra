@@ -38,13 +38,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       created_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       created_by: {
         type: Sequelize.INTEGER
       },
       updated_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updated_by: {
         type: Sequelize.INTEGER
@@ -55,16 +57,9 @@ module.exports = {
       deleted_by: {
         type: Sequelize.INTEGER
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
       city_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         onDelete: 'CASCADE',
         references: {
           model: 'Cities',
@@ -73,5 +68,5 @@ module.exports = {
         }
       }
     }),
-  down: (queryInterface /* Sequelize */) => queryInterface.dropTable('Vendors')
+  down: (queryInterface /*Sequelize*/) => queryInterface.dropTable('Cities')
 };

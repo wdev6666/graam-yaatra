@@ -1,31 +1,25 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Cities', {
-      city_id: {
+    queryInterface.createTable('States', {
+      state_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      city: {
-        type: Sequelize.STRING
-      },
-      isd_code: {
-        type: Sequelize.INTEGER
-      },
-      flag_icon: {
+      state: {
         type: Sequelize.STRING
       },
       created_at: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       created_by: {
         type: Sequelize.INTEGER
       },
       updated_at: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updated_by: {
         type: Sequelize.INTEGER
@@ -36,15 +30,15 @@ module.exports = {
       deleted_by: {
         type: Sequelize.INTEGER
       },
-      state_id: {
+      country_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
-          model: 'States',
-          key: 'state_id',
-          as: 'state_id'
+          model: 'Countries',
+          key: 'country_id',
+          as: 'country_id'
         }
       }
     }),
-  down: (queryInterface /*Sequelize*/) => queryInterface.dropTable('Cities')
+  down: (queryInterface /*Sequelize*/) => queryInterface.dropTable('States')
 };

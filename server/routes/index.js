@@ -28,4 +28,16 @@ module.exports = app => {
   app.get('/api/states/', stateController.list);
   app.put('/api/states/:state_id', validateRequest, stateController.update);
   app.delete('/api/states/:state_id', stateController.delete);
+
+  app.post('/api/cities/', validateRequest, cityController.create);
+  app.get('/api/cities/:city_id', cityController.retrieve);
+  app.get('/api/cities/', cityController.list);
+  app.put('/api/cities/:city_id', validateRequest, cityController.update);
+  app.delete('/api/cities/:city_id', cityController.delete);
+
+  app.post('/api/vendors/', validateRequest, vendorController.create);
+  app.get('/api/vendors/:vendor_id', vendorController.retrieve);
+  app.get('/api/vendors/', vendorController.list);
+  app.put('/api/vendors/:vendor_id', validateRequest, vendorController.update);
+  app.delete('/api/vendors/:vendor_id', vendorController.delete);
 };
