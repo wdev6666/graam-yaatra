@@ -1,6 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const { ErrorHandler, handleError } = require('./server/middlewares/error');
 
 // Set up the express app
@@ -12,10 +13,17 @@ app.use(logger('dev'));
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(passport.initialize());
 
-app.get('/error', (req, res) => {
-  throw new ErrorHandler(500, 'Internal Error!');
-});
+require('./server/config/passport')(passport);
+
+app.get(
+  '/error',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    throw new ErrorHandler(500, 'Internal Error!');
+  }
+);
 
 require('./server/routes')(app);
 

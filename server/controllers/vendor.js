@@ -14,6 +14,10 @@ module.exports = {
       .catch(error => next({ statusCode: 400, message: error.message }));
   },
 
+  login(req, res, next) {
+    return 
+  }
+
   list(req, res, next) {
     return Vendor.findAll({})
       .then(cities => res.status(200).send(cities))
