@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "User",
+    'User',
     {
       user_id: {
         allowNull: false,
@@ -10,11 +10,21 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.STRING,
-        unique: true
+        unique: true,
+        allowNull: false
       },
-      name: DataTypes.STRING,
-      password: DataTypes.STRING,
-      is_active: DataTypes.BOOLEAN,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      is_active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+      },
       created_at: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
@@ -30,10 +40,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      tableName: "Users",
-      createdAt: "created_at",
-      updatedAt: "updated_at",
-      deletedAt: "deleted_at",
+      tableName: 'Users',
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      deletedAt: 'deleted_at',
       paranoid: true,
       timestamps: true,
       underscored: true
