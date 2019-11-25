@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require("joi");
 
 const countrySchema = Joi.object().keys({
   country: Joi.string().required(),
@@ -25,13 +25,20 @@ const vendorSchema = Joi.object().keys({
   city_id: Joi.number().required()
 });
 
+const userSchema = Joi.object().keys({
+  email: Joi.string().required(),
+  name: Joi.string().required(),
+  password: Joi.string().required()
+});
+
 module.exports = {
-  '/api/countries/': countrySchema,
-  '/api/countries/:country_id': countrySchema,
-  '/api/states/': stateSchema,
-  '/api/states/:state_id': stateSchema,
-  '/api/cities/': citySchema,
-  '/api/cities/:city_id': citySchema,
-  '/api/vendors/': vendorSchema,
-  '/api/vendors/:vendor_id': vendorSchema
+  "/api/countries/": countrySchema,
+  "/api/countries/:country_id": countrySchema,
+  "/api/states/": stateSchema,
+  "/api/states/:state_id": stateSchema,
+  "/api/cities/": citySchema,
+  "/api/cities/:city_id": citySchema,
+  "/api/vendors/": vendorSchema,
+  "/api/vendors/:vendor_id": vendorSchema,
+  "/api/users/reqister": userSchema
 };

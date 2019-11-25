@@ -2,6 +2,7 @@ const countryController = require("../controllers").country;
 const stateController = require("../controllers").state;
 const cityController = require("../controllers").city;
 const vendorController = require("../controllers").vendor;
+const userController = require("../controllers").user;
 
 const SchemaValidator = require("../middlewares/SchemaValidation");
 const validateRequest = SchemaValidator(true);
@@ -41,5 +42,5 @@ module.exports = app => {
   app.put("/api/vendors/:vendor_id", validateRequest, vendorController.update);
   app.delete("/api/vendors/:vendor_id", vendorController.delete);
 
-  //app.post("/api/users/register", validateRequest, userController.register);
+  app.post("/api/users/register", validateRequest, userController.register);
 };
