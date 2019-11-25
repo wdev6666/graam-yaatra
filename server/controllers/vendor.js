@@ -1,4 +1,4 @@
-const Vendor = require('../models').Vendor;
+const Vendor = require("../models").Vendor;
 
 module.exports = {
   create(req, res, next) {
@@ -14,10 +14,6 @@ module.exports = {
       .catch(error => next({ statusCode: 400, message: error.message }));
   },
 
-  login(req, res, next) {
-    return 
-  }
-
   list(req, res, next) {
     return Vendor.findAll({})
       .then(cities => res.status(200).send(cities))
@@ -29,7 +25,7 @@ module.exports = {
       where: { vendor_id: req.params.vendor_id }
     })
       .then(vendor => {
-        if (!vendor) next({ statusCode: 404, message: 'No vendor found!' });
+        if (!vendor) next({ statusCode: 404, message: "No vendor found!" });
         return res.status(200).send(vendor);
       })
       .catch(error => next({ statusCode: 404, message: error.message }));
@@ -42,7 +38,7 @@ module.exports = {
       }
     })
       .then(vendor => {
-        if (!vendor) next({ statusCode: 400, message: 'vendor not found!' });
+        if (!vendor) next({ statusCode: 400, message: "vendor not found!" });
         return vendor
           .update({
             first_name: req.body.first_name,
@@ -69,11 +65,11 @@ module.exports = {
       where: { vendor_id: req.params.vendor_id }
     })
       .then(vendor => {
-        if (!vendor) next({ statusCode: 400, message: 'vendor not found!' });
+        if (!vendor) next({ statusCode: 400, message: "vendor not found!" });
         return vendor
           .destroy()
           .then(() =>
-            res.status(200).send({ message: 'vendor deleted successfully.' })
+            res.status(200).send({ message: "vendor deleted successfully." })
           )
           .catch(error => {
             next({ statusCode: 400, message: error.message });
