@@ -19,13 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       },
-      created_by: DataTypes.INTEGER,
       updated_at: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         onUpdate: DataTypes.NOW
       },
-      updated_by: DataTypes.INTEGER,
       deleted_at: {
         type: DataTypes.DATE,
         onDelete: DataTypes.NOW

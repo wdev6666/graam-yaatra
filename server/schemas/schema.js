@@ -31,6 +31,11 @@ const userSchema = Joi.object().keys({
   password: Joi.string().required()
 });
 
+const loginSchema = Joi.object().keys({
+  email: Joi.string().required(),
+  password: Joi.string().required()
+});
+
 module.exports = {
   "/api/countries/": countrySchema,
   "/api/countries/:country_id": countrySchema,
@@ -40,5 +45,6 @@ module.exports = {
   "/api/cities/:city_id": citySchema,
   "/api/vendors/": vendorSchema,
   "/api/vendors/:vendor_id": vendorSchema,
-  "/api/users/reqister": userSchema
+  "/api/users/reqister": userSchema,
+  "/api/users/login": loginSchema
 };

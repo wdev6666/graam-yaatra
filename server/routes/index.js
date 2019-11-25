@@ -43,4 +43,5 @@ module.exports = app => {
   app.delete("/api/vendors/:vendor_id", vendorController.delete);
 
   app.post("/api/users/register", validateRequest, userController.register);
+  app.post("/api/users/login", validateRequest, userController.login);
 };
