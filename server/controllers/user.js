@@ -1,8 +1,6 @@
-const User = require("../models").User;
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const keys = require("../config/keys");
-const passport = require("../config/passport");
+const User = require('../models').User;
+const jwt = require('jsonwebtoken');
+const keys = require('../config/keys');
 
 module.exports = {
   register(req, res, next) {
@@ -11,7 +9,7 @@ module.exports = {
     })
       .then(user => {
         if (user) {
-          next({ statusCode: 404, message: "Email id already exists!" });
+          next({ statusCode: 404, message: 'Email id already exists!' });
         } else {
           return User.create({
             email: req.body.email,
@@ -46,17 +44,17 @@ module.exports = {
             (err, token) => {
               res.json({
                 success: true,
-                token: "Bearer " + token
+                token: 'Bearer ' + token
               });
             }
           );
         } else
-          next({ statusCode: 404, message: "Email id or password incorrect!" });
+          next({ statusCode: 404, message: 'Email id or password incorrect!' });
       })
       .catch(error => next({ statusCode: 404, message: error.message }));
   },
 
   profile(req, res, next) {
-    res.send({ message: "Hello" });
+    res.send({ message: 'Hello' });
   }
 };
