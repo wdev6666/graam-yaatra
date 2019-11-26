@@ -1,28 +1,28 @@
-const User = require('../models').User;
-//const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const keys = require('../config/keys');
+const User = require("../models").User;
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const keys = require("../config/keys");
+const passport = require("../config/passport");
 
 module.exports = {
   register(req, res, next) {
-    /*const newUser = new User({
-      email: req.body.email,
-      name: req.body.name,
-      is_active: req.body.is_active
-    });
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(req.body.password, salt, (err, hash) => {
-        if (err) throw err;
-        newUser.password = hash;
-      });
-    });*/
-    return User.create({
-      email: req.body.email,
-      name: req.body.name,
-      is_active: req.body.is_active,
-      password: req.body.password
+    User.findOne({
+      where: { email: req.body.email, password: req.body.password }
     })
-      .then(user => res.status(200).send(user))
+      .then(user => {
+        if (user) {
+          next({ statusCode: 404, message: "Email id already exists!" });
+        } else {
+          return User.create({
+            email: req.body.email,
+            name: req.body.name,
+            is_active: req.body.is_active,
+            password: req.body.password
+          })
+            .then(user => res.status(200).send(user))
+            .catch(error => next({ statusCode: 400, message: error.message }));
+        }
+      })
       .catch(error => next({ statusCode: 400, message: error.message }));
   },
 
@@ -46,13 +46,17 @@ module.exports = {
             (err, token) => {
               res.json({
                 success: true,
-                token: 'Bearer ' + token
+                token: "Bearer " + token
               });
             }
           );
         } else
-          next({ statusCode: 404, message: 'Email id or password incorrect!' });
+          next({ statusCode: 404, message: "Email id or password incorrect!" });
       })
       .catch(error => next({ statusCode: 404, message: error.message }));
+  },
+
+  profile(req, res, next) {
+    res.send({ message: "Hello" });
   }
 };

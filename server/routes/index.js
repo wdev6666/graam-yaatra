@@ -7,6 +7,8 @@ const userController = require("../controllers").user;
 const SchemaValidator = require("../middlewares/SchemaValidation");
 const validateRequest = SchemaValidator(true);
 
+const passport = require("passport");
+
 module.exports = app => {
   app.get("/api", (req, res) =>
     res.status(200).send({
@@ -44,4 +46,9 @@ module.exports = app => {
 
   app.post("/api/users/register", validateRequest, userController.register);
   app.post("/api/users/login", validateRequest, userController.login);
+  app.get(
+    "/api/users/profile",
+    passport.authenticate(["jwt"], { session: false }),
+    userController.profile
+  );
 };
