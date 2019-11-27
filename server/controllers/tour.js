@@ -1,6 +1,7 @@
 const Tour = require('../models').Tour;
 const Tourist = require('../models').Tourist;
 const TourOrder = require('../models').TourOrder;
+const Coupon = require('../models').Coupon;
 
 module.exports = {
   create(req, res, next) {
@@ -24,6 +25,11 @@ module.exports = {
                 tour_id: tour.tour_id,
                 tourist_id: tourist.tourist_id
               }
+            }).then(() => {
+              Coupon.create({
+                tourist_id: tourist.tourist_id,
+                active: true
+              });
             });
             /*
             TourOrder.findOne({
