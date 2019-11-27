@@ -4,6 +4,7 @@ const cityController = require('../controllers').city;
 const vendorController = require('../controllers').vendor;
 const userController = require('../controllers').user;
 const tourController = require('../controllers').tour;
+const touristController = require('../controllers').tourist;
 
 const SchemaValidator = require('../middlewares/SchemaValidation');
 const validateRequest = SchemaValidator(true);
@@ -54,4 +55,11 @@ module.exports = app => {
   );
 
   app.post('/api/tours', tourController.create);
+  app.get('/api/tours', tourController.getAll);
+
+  app.post('/api/tourists/', touristController.create);
+  app.get('/api/tourists/:tourist_id', touristController.retrieve);
+  app.get('/api/tourists/', touristController.list);
+  app.put('/api/tourists/:tourist_id', touristController.update);
+  app.delete('/api/tourists/:tourist_id', touristController.delete);
 };
