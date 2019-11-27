@@ -3,6 +3,7 @@ const stateController = require('../controllers').state;
 const cityController = require('../controllers').city;
 const vendorController = require('../controllers').vendor;
 const userController = require('../controllers').user;
+const tourController = require('../controllers').tour;
 
 const SchemaValidator = require('../middlewares/SchemaValidation');
 const validateRequest = SchemaValidator(true);
@@ -51,4 +52,6 @@ module.exports = app => {
     passport.authenticate(['jwt'], { session: false }),
     userController.profile
   );
+
+  app.post('/api/tours', tourController.create);
 };

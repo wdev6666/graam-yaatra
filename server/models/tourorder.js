@@ -1,15 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
-  const Tourist = sequelize.define(
-    'Tourist',
+  const TourOrder = sequelize.define(
+    'TourOrder',
     {
-      tourist_id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER
+      tour_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
       },
-      name: DataTypes.STRING,
-      city: DataTypes.STRING,
+      tourist_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
+      },
       createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
@@ -25,18 +25,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      tableName: 'Tourists',
+      tableName: 'TourOrders',
       paranoid: true,
       timestamps: true
     }
   );
-  Tourist.associate = function(models) {
-    Tourist.belongsToMany(models.Tour, {
-      through: 'TourOrders',
-      as: 'tours',
-      foreignKey: 'tourist_id',
-      otherKey: 'tour_id'
-    });
+  TourOrder.associate = function(models) {
+    // associations can be defined here
   };
-  return Tourist;
+  return TourOrder;
 };

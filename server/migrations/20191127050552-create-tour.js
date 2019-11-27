@@ -8,7 +8,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      invoice: {
+        type: Sequelize.INTEGER
+      },
+      members: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -16,6 +23,9 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
+        type: Sequelize.DATE
+      },
+      deletedAt: {
         type: Sequelize.DATE
       }
     }),
