@@ -1,5 +1,6 @@
-const Coupon = require("../models").Coupon;
-const TourOrder = require("../models").TourOrder;
+const Coupon = require('../models').Coupon;
+const TourOrder = require('../models').TourOrder;
+const Tour = require('../models').Tour;
 
 module.exports = {
   list(req, res, next) {
@@ -8,7 +9,7 @@ module.exports = {
         res.send(coupons);
       })
       .catch(err =>
-        next({ statusCode: 404, message: "No coupons found for the day!" })
+        next({ statusCode: 404, message: 'No coupons found for the day!' })
       );
   },
 
@@ -16,16 +17,31 @@ module.exports = {
     let date = req.params.date;
 
     if (!validateDate(date))
-      return next({ statusCode: 400, message: "Invalid date format!" });
+      return next({ statusCode: 400, message: 'Invalid date format!' });
     Coupon.findAll({
-      attributes: ["tourist_id", "coupon"],
+      attributes: ['tourist_id', 'coupon'],
       where: { date: date }
     })
       .then(coupons => {
         res.send(coupons);
       })
       .catch(err =>
-        next({ statusCode: 404, message: "No coupons found for the day!" })
+        next({ statusCode: 404, message: 'No coupons found for the day!' })
+      );
+  },
+
+  listbytour(req, res, next) {
+    let tours = req.params.tours;
+
+    Coupon.find({
+      where: {},
+      include: [Tour]
+    })
+      .then(coupons => {
+        res.send(coupons);
+      })
+      .catch(err =>
+        next({ statusCode: 404, message: 'No coupons found for the day!' })
       );
   },
 
@@ -34,11 +50,11 @@ module.exports = {
       where: { id: req.params.id }
     })
       .then(coupon => {
-        if (!coupon) next({ statusCode: 400, message: "Coupon not found!" });
+        if (!coupon) next({ statusCode: 400, message: 'Coupon not found!' });
         return coupon
           .destroy()
           .then(() =>
-            res.status(200).send({ message: "Coupon deleted successfully." })
+            res.status(200).send({ message: 'Coupon deleted successfully.' })
           )
           .catch(error => {
             next({ statusCode: 400, message: error.message });
