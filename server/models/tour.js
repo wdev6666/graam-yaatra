@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Tour = sequelize.define(
-    'Tour',
+    "Tour",
     {
       tour_id: {
         allowNull: false,
@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      date: DataTypes.DATE,
+      date: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW
+      },
       invoice: DataTypes.INTEGER,
       members: DataTypes.INTEGER,
       createdAt: {
@@ -26,17 +29,17 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      tableName: 'Tours',
+      tableName: "Tours",
       paranoid: true,
       timestamps: true
     }
   );
   Tour.associate = models => {
     Tour.belongsToMany(models.Tourist, {
-      through: 'TourOrders',
-      as: 'tourists',
-      foreignKey: 'tour_id',
-      otherKey: 'tourist_id'
+      through: "TourOrders",
+      as: "tourists",
+      foreignKey: "tour_id",
+      otherKey: "tourist_id"
     });
   };
   return Tour;

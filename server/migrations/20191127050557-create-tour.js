@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Tours', {
+    queryInterface.createTable("Tours", {
       tour_id: {
         allowNull: false,
         autoIncrement: true,
@@ -8,8 +8,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       date: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
       invoice: {
         type: Sequelize.INTEGER
@@ -29,5 +29,5 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('Tours')
+  down: queryInterface => queryInterface.dropTable("Tours")
 };

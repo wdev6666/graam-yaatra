@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Coupon = sequelize.define(
-    'Coupon',
+    "Coupon",
     {
       id: {
         allowNull: false,
@@ -12,14 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       coupon: {
         type: DataTypes.UUID,
         allowNull: false,
-        defaultValue: DataTypes.UUIDV1
+        defaultValue: DataTypes.UUIDV4
       },
       active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
       },
       createdAt: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         defaultValue: DataTypes.NOW
       },
       updatedAt: {
@@ -33,14 +33,14 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      tableName: 'Coupons',
+      tableName: "Coupons",
       paranoid: true,
       timestamps: true
     }
   );
   Coupon.associate = function(models) {
     Coupon.belongsTo(models.Tourist, {
-      foreignKey: 'tourist_id'
+      foreignKey: "tourist_id"
     });
   };
   return Coupon;

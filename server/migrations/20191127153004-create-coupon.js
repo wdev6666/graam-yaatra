@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Coupons', {
+    queryInterface.createTable("Coupons", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,9 +10,9 @@ module.exports = {
       tourist_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Tourists',
-          key: 'tourist_id',
-          as: 'tourist_id'
+          model: "Tourists",
+          key: "tourist_id",
+          as: "tourist_id"
         }
       },
       active: {
@@ -20,16 +20,19 @@ module.exports = {
       },
       coupon: {
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV1
+        defaultValue: Sequelize.UUIDV4
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      deletedAt: {
+        type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('Coupons')
+  down: queryInterface => queryInterface.dropTable("Coupons")
 };
