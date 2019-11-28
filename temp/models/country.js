@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Country = sequelize.define(
-    "Country",
+    'Country',
     {
       country_id: {
         allowNull: false,
@@ -11,24 +11,31 @@ module.exports = (sequelize, DataTypes) => {
       country: DataTypes.STRING,
       isd_code: DataTypes.INTEGER,
       flag_icon: DataTypes.STRING,
-      createdAt: {
-        type: DataTypes.DATEONLY,
+      created_at: {
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       },
-      updatedAt: {
-        type: DataTypes.DATEONLY,
+      created_by: DataTypes.INTEGER,
+      updated_at: {
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         onUpdate: DataTypes.NOW
       },
-      deletedAt: {
-        type: DataTypes.DATEONLY,
+      updated_by: DataTypes.INTEGER,
+      deleted_at: {
+        type: DataTypes.DATE,
         onDelete: DataTypes.NOW
-      }
+      },
+      deleted_by: DataTypes.INTEGER
     },
     {
-      tableName: "Countries",
+      tableName: 'Countries',
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      deletedAt: 'deleted_at',
       paranoid: true,
-      timestamps: true
+      timestamps: true,
+      underscored: true
     }
   );
   return Country;

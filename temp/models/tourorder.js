@@ -11,16 +11,16 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true
       },
       createdAt: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       },
       updatedAt: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         onUpdate: DataTypes.NOW
       },
       deletedAt: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         onDelete: DataTypes.NOW
       }
     },

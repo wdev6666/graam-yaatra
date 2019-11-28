@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Vendor = sequelize.define(
-    "Vendor",
+    'Vendor',
     {
       vendor_id: {
         allowNull: false,
@@ -18,31 +18,38 @@ module.exports = (sequelize, DataTypes) => {
       verified_at: DataTypes.DATE,
       status: DataTypes.INTEGER,
       referal_vendor_id: DataTypes.INTEGER,
-      createdAt: {
-        type: DataTypes.DATEONLY,
+      created_at: {
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       },
-      updatedAt: {
-        type: DataTypes.DATEONLY,
+      created_by: DataTypes.INTEGER,
+      updated_at: {
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         onUpdate: DataTypes.NOW
       },
-      deletedAt: {
-        type: DataTypes.DATEONLY,
+      updated_by: DataTypes.INTEGER,
+      deleted_at: {
+        type: DataTypes.DATE,
         onDelete: DataTypes.NOW
-      }
+      },
+      deleted_by: DataTypes.INTEGER
     },
     {
-      tableName: "Vendors",
+      tableName: 'Vendors',
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      deletedAt: 'deleted_at',
       paranoid: true,
-      timestamps: true
+      timestamps: true,
+      underscored: true
     }
   );
   Vendor.associate = models => {
     Vendor.belongsTo(models.City, {
-      foreignKey: "city_id",
+      foreignKey: 'city_id',
       allowNull: false,
-      onDelete: "CASCADE"
+      onDelete: 'CASCADE'
     });
   };
   return Vendor;

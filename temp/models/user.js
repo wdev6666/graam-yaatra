@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "User",
+    'User',
     {
       user_id: {
         allowNull: false,
@@ -25,24 +25,28 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: true
       },
-      createdAt: {
-        type: DataTypes.DATEONLY,
+      created_at: {
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       },
-      updatedAt: {
-        type: DataTypes.DATEONLY,
+      updated_at: {
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         onUpdate: DataTypes.NOW
       },
-      deletedAt: {
-        type: DataTypes.DATEONLY,
+      deleted_at: {
+        type: DataTypes.DATE,
         onDelete: DataTypes.NOW
       }
     },
     {
-      tableName: "Users",
+      tableName: 'Users',
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      deletedAt: 'deleted_at',
       paranoid: true,
-      timestamps: true
+      timestamps: true,
+      underscored: true
     }
   );
   return User;

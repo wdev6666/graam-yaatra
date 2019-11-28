@@ -1,39 +1,42 @@
 module.exports = (sequelize, DataTypes) => {
-  const City = sequelize.define(
-    "City",
+  const Tourist = sequelize.define(
+    'Tourist',
     {
-      city_id: {
+      tourist_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER
       },
+      name: DataTypes.STRING,
       city: DataTypes.STRING,
       createdAt: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       },
       updatedAt: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         onUpdate: DataTypes.NOW
       },
       deletedAt: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         onDelete: DataTypes.NOW
       }
     },
     {
-      tableName: "Cities",
+      tableName: 'Tourists',
       paranoid: true,
       timestamps: true
     }
   );
-  City.associate = models => {
-    City.belongsTo(models.State, {
-      foreignKey: "state_id",
-      onDelete: "CASCADE"
+  Tourist.associate = function(models) {
+    Tourist.belongsToMany(models.Tour, {
+      through: 'TourOrders',
+      as: 'tours',
+      foreignKey: 'tourist_id',
+      otherKey: 'tour_id'
     });
   };
-  return City;
+  return Tourist;
 };

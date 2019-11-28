@@ -9,22 +9,22 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER
       },
       date: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       },
       invoice: DataTypes.INTEGER,
       members: DataTypes.INTEGER,
       createdAt: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       },
       updatedAt: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         onUpdate: DataTypes.NOW
       },
       deletedAt: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         onDelete: DataTypes.NOW
       }
     },

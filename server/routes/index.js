@@ -55,16 +55,56 @@ module.exports = app => {
     userController.profile
   );
 
-  app.post("/api/tours", tourController.create);
-  app.get("/api/tours", tourController.getAll);
+  app.post(
+    "/api/tours",
+    passport.authenticate(["jwt"], { session: false }),
+    tourController.create
+  );
+  app.get(
+    "/api/tours",
+    passport.authenticate(["jwt"], { session: false }),
+    tourController.getAll
+  );
 
-  app.post("/api/tourists/", touristController.create);
-  app.get("/api/tourists/:tourist_id", touristController.retrieve);
-  app.get("/api/tourists/", touristController.list);
-  app.put("/api/tourists/:tourist_id", touristController.update);
-  app.delete("/api/tourists/:tourist_id", touristController.delete);
+  app.post(
+    "/api/tourists/",
+    passport.authenticate(["jwt"], { session: false }),
+    touristController.create
+  );
+  app.get(
+    "/api/tourists/:tourist_id",
+    passport.authenticate(["jwt"], { session: false }),
+    touristController.retrieve
+  );
+  app.get(
+    "/api/tourists/",
+    passport.authenticate(["jwt"], { session: false }),
+    touristController.list
+  );
+  app.put(
+    "/api/tourists/:tourist_id",
+    passport.authenticate(["jwt"], { session: false }),
+    touristController.update
+  );
+  app.delete(
+    "/api/tourists/:tourist_id",
+    passport.authenticate(["jwt"], { session: false }),
+    touristController.delete
+  );
 
-  app.get("/api/coupons/", couponController.list);
-  app.get("/api/coupons/:date", couponController.listbydate);
-  app.delete("/api/coupons/:id", couponController.delete);
+  app.get(
+    "/api/coupons/",
+    passport.authenticate(["jwt"], { session: false }),
+    couponController.list
+  );
+  app.get(
+    "/api/coupons/:date",
+    passport.authenticate(["jwt"], { session: false }),
+    couponController.listbydate
+  );
+  app.delete(
+    "/api/coupons/:id",
+    passport.authenticate(["jwt"], { session: false }),
+    couponController.delete
+  );
 };

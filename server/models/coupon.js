@@ -18,17 +18,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: true
       },
+      date: {
+        type: DataTypes.DATEONLY
+      },
       createdAt: {
         type: DataTypes.DATEONLY,
         defaultValue: DataTypes.NOW
       },
       updatedAt: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         defaultValue: DataTypes.NOW,
         onUpdate: DataTypes.NOW
       },
       deletedAt: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         onDelete: DataTypes.NOW
       }
     },

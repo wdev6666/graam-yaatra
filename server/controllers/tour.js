@@ -1,7 +1,7 @@
-const Tour = require('../models').Tour;
-const Tourist = require('../models').Tourist;
-const TourOrder = require('../models').TourOrder;
-const Coupon = require('../models').Coupon;
+const Tour = require("../models").Tour;
+const Tourist = require("../models").Tourist;
+const TourOrder = require("../models").TourOrder;
+const Coupon = require("../models").Coupon;
 
 module.exports = {
   create(req, res, next) {
@@ -16,7 +16,7 @@ module.exports = {
             if (!tourist) {
               //  return next({ statusCode: 404, message: 'Tourist not found!' });
               error = true;
-              errorMessage.push('Tourist not found!');
+              errorMessage.push("Tourist not found!");
               return true;
             }
             TourOrder.findOrCreate({
@@ -28,7 +28,8 @@ module.exports = {
             }).then(() => {
               Coupon.create({
                 tourist_id: tourist.tourist_id,
-                active: true
+                active: true,
+                date: req.body.date
               });
             });
             /*
@@ -52,7 +53,7 @@ module.exports = {
           });
         });
         if (error) return next({ statusCode: 400, message: errorMessage[0] });
-        else return res.status(200).json({ message: 'Tour added successful!' });
+        else return res.status(200).json({ message: "Tour added successful!" });
       })
       .catch(err => next({ statusCode: 400, message: err }));
   },
@@ -62,14 +63,14 @@ module.exports = {
       include: [
         {
           model: Tourist,
-          as: 'tourists',
+          as: "tourists",
           required: true,
           // Pass in the Product attributes that you want to retrieve
-          attributes: ['tourist_id', 'name', 'city'],
+          attributes: ["tourist_id", "name", "city"],
           through: {
             // This block of code allows you to retrieve the properties of the join table
             model: TourOrder,
-            as: 'tourOrder'
+            as: "tourOrder"
           }
         }
       ]

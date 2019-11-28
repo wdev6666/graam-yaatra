@@ -19,7 +19,7 @@ module.exports = {
       return next({ statusCode: 400, message: "Invalid date format!" });
     Coupon.findAll({
       attributes: ["tourist_id", "coupon"],
-      where: { createdAt: date }
+      where: { date: date }
     })
       .then(coupons => {
         res.send(coupons);

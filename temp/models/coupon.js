@@ -1,27 +1,20 @@
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    "User",
+  const Coupon = sequelize.define(
+    "Coupon",
     {
-      user_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      email: {
-        type: DataTypes.STRING,
-        unique: true,
-        allowNull: false
+      tourist_id: DataTypes.INTEGER,
+      coupon: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        defaultValue: DataTypes.UUIDV4
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      is_active: {
+      active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
       },
@@ -30,20 +23,25 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.NOW
       },
       updatedAt: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         onUpdate: DataTypes.NOW
       },
       deletedAt: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         onDelete: DataTypes.NOW
       }
     },
     {
-      tableName: "Users",
+      tableName: "Coupons",
       paranoid: true,
       timestamps: true
     }
   );
-  return User;
+  Coupon.associate = function(models) {
+    Coupon.belongsTo(models.Tourist, {
+      foreignKey: "tourist_id"
+    });
+  };
+  return Coupon;
 };
