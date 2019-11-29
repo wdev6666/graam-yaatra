@@ -5,8 +5,46 @@ const Coupon = require('../models').Coupon;
 
 module.exports = {
   create(req, res, next) {
-    let error = false;
-    let errorMessage = [];
+    var flag = 'ABC';
+    if (req.body.tourists.length <= 0) {
+      next({ statusCode: 400, message: 'Insert tourist data first!' });
+    } else {
+      req.body.tourists.forEach(tourist_id => {
+        Tourist.findOne({ where: { tourist_id: tourist_id } }).then(tourist => {
+          //console.log(flag);
+          if (tourist) {
+            flag = true;
+          } else {
+            flag = false;
+          }
+        });
+      });
+      if (flag) {
+        Tour.create(req.body, { w: 1 }, { returning: true }).then(tour => {
+          req.body.tourists.forEach(tourist_id => {
+            TourOrder.findOrCreate({
+              where: {
+                tour_id: tour.tour_id,
+                tourist_id: tourist_id
+              },
+              defaults: {
+                tour_id: tour.tour_id,
+                tourist_id: tourist_id
+              }
+            }).then(() => {
+              Coupon.create({
+                tourist_id: tourist_id,
+                active: true,
+                date: req.body.date
+              });
+            });
+          });
+        });
+      } else {
+        next({ statusCode: 404, message: 'Insert tourist data!' });
+      }
+    }
+    /*
     Tour.create(req.body, { w: 1 }, { returning: true })
       .then(function(tour) {
         req.body.tourists.forEach(item => {
@@ -14,10 +52,8 @@ module.exports = {
             where: { tourist_id: item.tourist_id }
           }).then(tourist => {
             if (!tourist) {
-              //  return next({ statusCode: 404, message: 'Tourist not found!' });
-              error = true;
-              errorMessage.push('Tourist not found!');
-              return true;
+              return false;
+              //next({ statusCode: 404, message: 'Tourist not found!' });
             }
             TourOrder.findOrCreate({
               where: { tour_id: tour.tour_id, tourist_id: tourist.tourist_id },
@@ -31,8 +67,8 @@ module.exports = {
                 active: true,
                 date: req.body.date
               });
-            });
-            /*
+            });*/
+    /*
             TourOrder.findOne({
               where: { tour_id: tour.tour_id, tourist_id: tourist.tourist_id }
             }).then(tourOrder => {
@@ -50,12 +86,11 @@ module.exports = {
                 });
               }
             });*/
-          });
-        });
-        if (error) return next({ statusCode: 400, message: errorMessage[0] });
-        else return res.status(200).json({ message: 'Tour added successful!' });
-      })
-      .catch(err => next({ statusCode: 400, message: err }));
+    //  });
+    //});
+    //return res.status(200).json({ message: 'Tour added successful!' });
+    //})
+    //.catch(err => next({ statusCode: 400, message: err }));
   },
 
   list(req, res, next) {
