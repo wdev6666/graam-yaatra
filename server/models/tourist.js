@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Tourist = sequelize.define(
-    'Tourist',
+    "Tourist",
     {
       tourist_id: {
         allowNull: false,
@@ -25,17 +25,17 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      tableName: 'Tourists',
+      tableName: "Tourists",
       paranoid: true,
       timestamps: true
     }
   );
   Tourist.associate = function(models) {
     Tourist.belongsToMany(models.Tour, {
-      through: 'TourOrders',
-      as: 'tours',
-      foreignKey: 'tourist_id',
-      otherKey: 'tour_id'
+      through: "TourOrders",
+      as: "tours",
+      foreignKey: "tourist_id",
+      otherKey: "tour_id"
     });
   };
   return Tourist;
