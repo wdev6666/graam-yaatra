@@ -26,9 +26,7 @@ module.exports = {
       .then(coupons => {
         res.send(coupons);
       })
-      .catch(err =>
-        next({ statusCode: 404, message: 'No coupons found for the day!' })
-      );
+      .catch(err => next({ statusCode: 404, message: err }));
   },
 
   listbytour(req, res, next) {
