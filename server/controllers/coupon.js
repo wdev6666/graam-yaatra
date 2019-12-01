@@ -1,7 +1,7 @@
-const Coupon = require("../models").Coupon;
-const TourOrder = require("../models").TourOrder;
-const Tour = require("../models").Tour;
-const Tourist = require("../models").Tourist;
+const Coupon = require('../models').Coupon;
+const TourOrder = require('../models').TourOrder;
+const Tour = require('../models').Tour;
+const Tourist = require('../models').Tourist;
 
 module.exports = {
   list(req, res, next) {
@@ -10,7 +10,7 @@ module.exports = {
         res.send(coupons);
       })
       .catch(err =>
-        next({ statusCode: 404, message: "No coupons found for the day!" })
+        next({ statusCode: 404, message: 'No coupons found for the day!' })
       );
   },
 
@@ -18,41 +18,39 @@ module.exports = {
     let date = req.params.date;
 
     if (!validateDate(date))
-      return next({ statusCode: 400, message: "Invalid date format!" });
+      return next({ statusCode: 400, message: 'Invalid date format!' });
     Coupon.findAll({
-      attributes: ["tourist_id", "coupon"],
+      attributes: ['tourist_id', 'coupon'],
       where: { date: date }
     })
       .then(coupons => {
         res.send(coupons);
       })
       .catch(err =>
-        next({ statusCode: 404, message: "No coupons found for the day!" })
+        next({ statusCode: 404, message: 'No coupons found for the day!' })
       );
   },
 
   listbytour(req, res, next) {
     let tour_ids = req.body.tours;
-    let touristList = [];
-    let couponList = [];
+    console.log(tour_ids);
     Tourist.findAll({
       include: [
         {
           model: Tour,
-          as: "tours",
+          as: 'tours',
           require: false,
           through: {
             model: TourOrder,
-            as: "tourOrders"
+            as: 'tourOrders'
           },
           where: { tour_id: tour_ids }
         }
       ]
     })
       .then(tourists => {
-        const resObj = tourists.map(tourist => {
-          return touristList.push(tourist.tourist_id);
-        });
+        let touristList = tourists.map(tourist => tourist.tourist_id);
+        console.log(tourists);
         if (touristList.length > 0) {
           Coupon.findAll({
             where: { tourist_id: touristList }
@@ -69,11 +67,11 @@ module.exports = {
       where: { id: req.params.id }
     })
       .then(coupon => {
-        if (!coupon) next({ statusCode: 400, message: "Coupon not found!" });
+        if (!coupon) next({ statusCode: 400, message: 'Coupon not found!' });
         return coupon
           .destroy()
           .then(() =>
-            res.status(200).send({ message: "Coupon deleted successfully." })
+            res.status(200).send({ message: 'Coupon deleted successfully.' })
           )
           .catch(error => {
             next({ statusCode: 400, message: error.message });

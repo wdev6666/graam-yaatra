@@ -1,48 +1,49 @@
-const Tour = require("../models").Tour;
-const Tourist = require("../models").Tourist;
-const TourOrder = require("../models").TourOrder;
-const Coupon = require("../models").Coupon;
+const Tour = require('../models').Tour;
+const Tourist = require('../models').Tourist;
+const TourOrder = require('../models').TourOrder;
+const Coupon = require('../models').Coupon;
 
 module.exports = {
   create(req, res, next) {
+    var flag = true;
     if (req.body.tourists.length <= 0) {
-      next({ statusCode: 400, message: "Insert tourist data first!" });
+      next({ statusCode: 400, message: 'Insert tourist data first!' });
     } else {
-      var a = "";
       req.body.tourists.forEach(tourist_id => {
-        return Tourist.findOne({ where: { tourist_id: tourist_id } }).then(
-          tourist => {
-            //console.log(flag);
-            if (!tourist) {
-              next({ statusCode: 404, message: "Insert tourist data!" });
-            } else {
-              Tour.create(req.body, { w: 1 }, { returning: true }).then(
-                tour => {
-                  req.body.tourists.forEach(tourist_id => {
-                    TourOrder.findOrCreate({
-                      where: {
-                        tour_id: tour.tour_id,
-                        tourist_id: tourist_id
-                      },
-                      defaults: {
-                        tour_id: tour.tour_id,
-                        tourist_id: tourist_id
-                      }
-                    }).then(() => {
-                      Coupon.create({
-                        tourist_id: tourist_id,
-                        active: true,
-                        date: req.body.date
-                      });
-                    });
-                  });
-                  return res.send("Tour created successfully!");
-                }
-              );
-            }
+        Tourist.findOne({ where: { tourist_id: tourist_id } }).then(tourist => {
+          //console.log(flag);
+          if (!tourist) {
+            flag = false;
+          } else {
+            flag = true;
           }
-        );
+        });
       });
+      if (flag) {
+        Tour.create(req.body, { w: 1 }, { returning: true }).then(tour => {
+          req.body.tourists.forEach(tourist_id => {
+            TourOrder.findOrCreate({
+              where: {
+                tour_id: tour.tour_id,
+                tourist_id: tourist_id
+              },
+              defaults: {
+                tour_id: tour.tour_id,
+                tourist_id: tourist_id
+              }
+            }).then(() => {
+              Coupon.create({
+                tourist_id: tourist_id,
+                active: true,
+                date: req.body.date
+              });
+              res.send('Tours added!');
+            });
+          });
+        });
+      } else {
+        next({ statusCode: 404, message: 'Insert tourist data!' });
+      }
     }
     /*
     Tour.create(req.body, { w: 1 }, { returning: true })
@@ -98,12 +99,12 @@ module.exports = {
       include: [
         {
           model: Tourist,
-          as: "tourists",
+          as: 'tourists',
           required: true,
-          attributes: ["tourist_id", "name", "city"],
+          attributes: ['tourist_id', 'name', 'city'],
           through: {
             model: TourOrder,
-            as: "tourOrder"
+            as: 'tourOrder'
           }
         }
       ]
@@ -116,9 +117,9 @@ module.exports = {
   listbydate(req, res, next) {
     let date = req.params.date;
     if (!validateDate(date))
-      return next({ statusCode: 400, message: "Invalid date format!" });
+      return next({ statusCode: 400, message: 'Invalid date format!' });
     Tour.findAll({
-      attributes: ["tour_id", "members"],
+      attributes: ['tour_id', 'members'],
       where: { date: req.params.date }
     })
       .then(tours => {
